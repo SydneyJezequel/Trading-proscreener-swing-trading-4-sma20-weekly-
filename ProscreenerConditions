@@ -1,0 +1,87 @@
+// ************************** Indicateurs et Paramètres ************************** //
+
+TIMEFRAME (weekly)
+SMA20 = Average[20](close)
+SMA50 = Average[50](close)
+alignedPeriod = 10
+VolMini = 10000
+authorizedDistance = 0.04
+
+
+
+
+
+
+// ***************** Conditions - Point d’entré ***************** //
+
+// Clôture de la dernière bougie croise à la hausse sma20 :
+C1 = Close CROSSES OVER SMA20 or (Close > SMA20 and Open <SMA20)
+
+
+// Clôture de la bougie :
+C2 = Close = SMA20
+
+
+// Bas de la dernière bougie égal ou croise sma20 :
+C3 = Low[0] = SMA20 or Low[0] CROSSES OVER SMA20
+
+
+// Prix proche (3% ou moins) et supérieur à SMA20 :
+C4 = 0
+FOR i = 0 TO 1 DO
+smaCloseDistance = abs((Close[i] - SMA20) / SMA20)
+smaLowDistance = abs((Low[i] - SMA20) / SMA20)
+IF (smaCloseDistance <= authorizedDistance and Low[i] > SMA20) OR (smaLowDistance <= authorizedDistance and Low[i] > SMA20)THEN
+C4 = 1
+BREAK
+ENDIF
+NEXT
+
+
+// Rebond :
+C5 = close[0] > close[1]
+
+
+// Condition qui regroupe les conditions des points d'entrés :
+C6 = (C1 or C2 or C3 or C4) and C5
+
+
+
+
+
+
+// ************************** Conditions - Tendance de fond ************************** //
+
+// sma100 > sma200 :
+C7 = SMA20 > SMA50
+
+
+// sma100 haussière :
+C8 = SMA20[0] >= SMA20[1] and SMA20[1] >= SMA20[2] and SMA20[2] >= SMA20[3] and SMA20[3] >= SMA20[4] and SMA20[4] >= SMA20[5]
+
+
+// Volume de transaction minimum :
+C9 = VOLUME >= VolMini
+
+
+// Alignement haussier des sma100 et sma200 :
+C10 = 1
+FOR i = 0 TO alignedPeriod DO
+IF NOT (SMA20[i] > SMA50[i]) THEN
+C10 = 0
+BREAK
+ENDIF
+i = i+1
+NEXT
+
+
+// Condition qui regroupe les conditions de la tendance de fond :
+C11 = C7 and C8 and C9 and C10
+
+
+
+
+
+
+// ************************** Conditions du Screener ************************** //
+SCREENER [C6 and C11]

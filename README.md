@@ -18,16 +18,18 @@ Le volume minimum est de 10 000.
 Les moyennes mobiles 20 et 50 sont alignées à la hausse.
 Le langage utilisé est ProRealcode, un langage propre à la plateforme de Trading Prorealtime. Ci-dessous des exemples d'actions détectées par le screener.
 
-Exemple sur l’action  au 30/01/2025 :
+
+Exemple sur l’action Euronext au 30/01/2025 :
+![Capture d’écran 2025-01-30 à 20 52 45](https://github.com/user-attachments/assets/fda7a2a0-9b39-4a80-aafc-33ca526b867e)
 
 
-
-Exemple sur l’action  au 30/01/2025 :
-
-
-
-Exemple sur l’ETF  au 30/07/2024 :
+Exemple sur l’action TUBIZE-FIN au 30/01/2025 :
+![Capture d’écran 2025-01-30 à 20 57 50](https://github.com/user-attachments/assets/3e1d8e88-2b87-49a5-afcc-74c632b00ae6)
 
 
+Exemple sur l’ETF AMUNDI ETF MSCI WR au 30/01/2025 :
+![Capture d’écran 2025-01-30 à 20 54 44](https://github.com/user-attachments/assets/d25749a8-72f9-4c7d-ba9d-49d5be55b326)
 
-Exemple sur l’ETF  au 30/07/2024 :
+
+Exemple sur l’ETF AMUNDI PHYS GOLD au 30/01/2025 :
+![Capture d’écran 2025-01-30 à 20 56 29](https://github.com/user-attachments/assets/8a8a9001-a50b-4614-a3a0-97ef4c539831)

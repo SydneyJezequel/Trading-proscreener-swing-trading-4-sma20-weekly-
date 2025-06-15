@@ -2,10 +2,10 @@
 
 TIMEFRAME (weekly)
 SMA20 = Average[20](close)
-SMA50 = Average[50](close)
+SMA40 = Average[40](close)
 alignedPeriod = 10
 VolMini = 10000
-authorizedDistance = 0.04
+authorizedDistance = 0.03
 
 
 
@@ -13,6 +13,7 @@ authorizedDistance = 0.04
 
 
 // ***************** Conditions - Point d’entré ***************** //
+
 
 // Clôture de la dernière bougie croise à la hausse sma20 :
 C1 = Close CROSSES OVER SMA20 or (Close > SMA20 and Open <SMA20)
@@ -53,21 +54,17 @@ C6 = (C1 or C2 or C3 or C4) and C5
 // ************************** Conditions - Tendance de fond ************************** //
 
 // sma100 > sma200 :
-C7 = SMA20 > SMA50
+C7 = SMA20 > SMA40
 
 
 // sma100 haussière :
 C8 = SMA20[0] >= SMA20[1] and SMA20[1] >= SMA20[2] and SMA20[2] >= SMA20[3] and SMA20[3] >= SMA20[4] and SMA20[4] >= SMA20[5]
 
 
-// Volume de transaction minimum :
-C9 = VOLUME >= VolMini
-
-
 // Alignement haussier des sma100 et sma200 :
-C10 = 1
+C9 = 1
 FOR i = 0 TO alignedPeriod DO
-IF NOT (SMA20[i] > SMA50[i]) THEN
+IF NOT (SMA20[i] > SMA40[i]) THEN
 C10 = 0
 BREAK
 ENDIF
@@ -75,8 +72,30 @@ i = i+1
 NEXT
 
 
-// Condition qui regroupe les conditions de la tendance de fond :
-C11 = C7 and C8 and C9 and C10
+// Condition qui regroupe les conditions de la tendance de fond (Momentum) :
+C10 = C7 and C8 and C9
+
+
+
+
+
+
+// ************************** Momentum ************************** //
+
+// L’écartement sma20 / sma40 s’élargit :
+C11 = 0
+IF (SMA20[0] - SMA40[0] > SMA20[5] - SMA40[5]) THEN
+C11 = 1
+ENDIF
+
+
+
+
+
+
+// ************************** Volume ************************** //
+
+C12 = VOLUME >= VolMini
 
 
 
@@ -84,4 +103,4 @@ C11 = C7 and C8 and C9 and C10
 
 
 // ************************** Conditions du Screener ************************** //
-SCREENER [C6 and C11]
+SCREENER [C6 and C10 and C11 and C12]
